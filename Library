@@ -1,33 +1,35 @@
 local Library = {}
 
--- Splash animation function
-local function showSplash()
-    local splashGui = Instance.new("ScreenGui")
-    splashGui.Name = "LumeSplash"
-    splashGui.IgnoreGuiInset = true
-    splashGui.ResetOnSpawn = false
-    splashGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    splashGui.Parent = game:GetService("CoreGui")
+local TweenService = game:GetService("TweenService")
+local player = game.Players.LocalPlayer
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+screenGui.ResetOnSpawn = false
 
-    local splashFrame = Instance.new("Frame")
-    splashFrame.Size = UDim2.new(0, 300, 0, 150)
-    splashFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
-    splashFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-    splashFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-    splashFrame.Parent = splashGui
+local textLabel = Instance.new("TextLabel")
+textLabel.Parent = screenGui
+textLabel.Size = UDim2.new(0, 400, 0, 50)
+textLabel.Position = UDim2.new(0.5, -200, 0.5, -25)
+textLabel.BackgroundTransparency = 1
+textLabel.Text = "Lume Library </>"
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.TextScaled = true
+textLabel.Font = Enum.Font.GothamBold
+textLabel.TextTransparency = 1
 
-    local splashLabel = Instance.new("TextLabel")
-    splashLabel.Size = UDim2.new(1, 0, 1, 0)
-    splashLabel.BackgroundTransparency = 1
-    splashLabel.Text = "Lume Library"
-    splashLabel.Font = Enum.Font.GothamBold
-    splashLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    splashLabel.TextScaled = true
-    splashLabel.Parent = splashFrame
+-- Fade In
+local fadeIn = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 0})
+fadeIn:Play()
+fadeIn.Completed:Wait()
 
-    task.wait(2)
-    splashGui:Destroy()
-end
+-- Wait and then Fade Out
+task.wait(2)
+local fadeOut = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 1})
+fadeOut:Play()
+fadeOut.Completed:Wait()
+
+-- Remove GUI after fade
+task.wait(0.5)
+screenGui:Destroy()
 
 Window.Name = "Window"
 Window.Parent = Prefabs
