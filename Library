@@ -72,3 +72,5 @@ function Library:CreateWindow(title)
 	Window.Size = UDim2.new(0, options.min_size.X, 0, options.min_size.Y)
 	Window.ZIndex = Window.ZIndex + (windows * 10)
 end
+
+return Library
