@@ -1,11 +1,5 @@
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzzAvi535/Lume-Library/refs/heads/main/Library", true))()
 
--- Example: Use the library to create a splash screen and window
-library:SplashScreen()  -- Show the splash screen first
-
-task.wait(3)  -- Wait for 3 seconds to let the splash animation complete
-
--- Now create the window after splash screen
 library:CreateWindow("Avi & Vyxon’s UI")
 
 -- Add content to the window (like a label)
