@@ -31,6 +31,13 @@ fadeOut.Completed:Wait()
 task.wait(0.5)
 screenGui:Destroy()
 
+-- Setup Prefabs properly
+local Prefabs = Instance.new("Folder")
+Prefabs.Name = "Prefabs"
+Prefabs.Parent = game:GetService("CoreGui") -- or anywhere visible and valid
+
+-- Create and store the prefab
+local Window = Instance.new("ImageLabel")
 Window.Name = "Window"
 Window.Parent = Prefabs
 Window.Active = true
@@ -41,9 +48,16 @@ Window.Position = UDim2.new(0.5, -200, 0.5, -125)
 Window.Selectable = true
 Window.Size = UDim2.new(0, 600, 0, 350)
 Window.Image = "rbxassetid://2851926732"
-Window.ImageColor3 = Color3.new(0.0823529, 0.0862745, 0.0901961)
+Window.ImageColor3 = Color3.fromRGB(21, 22, 23)
 Window.ScaleType = Enum.ScaleType.Slice
 Window.SliceCenter = Rect.new(12, 12, 12, 12)
+
+-- Make sure Windows frame exists
+local Windows = Instance.new("Frame")
+Windows.Name = "Windows"
+Windows.Parent = game:GetService("CoreGui")
+Windows.Size = UDim2.new(1, 0, 1, 0)
+Windows.BackgroundTransparency = 1
 
 function Library:CreateWindow(title)
     windows = windows + 1
@@ -57,11 +71,4 @@ function Library:CreateWindow(title)
 	Window:FindFirstChild("Title").Text = title
 	Window.Size = UDim2.new(0, options.min_size.X, 0, options.min_size.Y)
 	Window.ZIndex = Window.ZIndex + (windows * 10)
-
-	do -- Altering Window Color
-		local Title = Window:FindFirstChild("Title")
-		local Bar = Window:FindFirstChild("Bar")
-		local Base = Bar:FindFirstChild("Base")
-		local Top = Bar:FindFirstChild("Top")
-		local SplitFrame = Window:FindFirstChild("TabSelection"):FindFirstChild("Frame")
-		local Toggle = Bar:FindFirstChild("Toggle")
+end
