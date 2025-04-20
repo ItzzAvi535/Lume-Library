@@ -1,5 +1,4 @@
--- Load the Lume Library from an external URL
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/yourusername/yourrepository/main/LumeLibrary.lua", true))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzzAvi535/Lume-Library/refs/heads/main/Library", true))()
 
 -- Example: Use the library to create a splash screen and window
 library:SplashScreen()  -- Show the splash screen first
