@@ -1,135 +1,82 @@
 local Library = {}
 
-function Library:SplashScreen()
-    local TweenService = game:GetService("TweenService")
-    local player = game.Players.LocalPlayer
-    local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-    screenGui.ResetOnSpawn = false
+-- Splash animation function
+local function showSplash()
+    local splashGui = Instance.new("ScreenGui")
+    splashGui.Name = "LumeSplash"
+    splashGui.IgnoreGuiInset = true
+    splashGui.ResetOnSpawn = false
+    splashGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    splashGui.Parent = game:GetService("CoreGui")
 
-    local textLabel = Instance.new("TextLabel")
-    textLabel.Parent = screenGui
-    textLabel.Size = UDim2.new(0, 400, 0, 50)
-    textLabel.Position = UDim2.new(0.5, -200, 0.5, -25)
-    textLabel.BackgroundTransparency = 1
-    textLabel.Text = "Lume Library </>"
-    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    textLabel.TextScaled = true
-    textLabel.Font = Enum.Font.GothamBold
-    textLabel.TextTransparency = 1
+    local splashFrame = Instance.new("Frame")
+    splashFrame.Size = UDim2.new(0, 300, 0, 150)
+    splashFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
+    splashFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    splashFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    splashFrame.Parent = splashGui
 
-
-    local fadeIn = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 0})
-    fadeIn:Play()
-    fadeIn.Completed:Wait()
+    local splashLabel = Instance.new("TextLabel")
+    splashLabel.Size = UDim2.new(1, 0, 1, 0)
+    splashLabel.BackgroundTransparency = 1
+    splashLabel.Text = "Lume Library"
+    splashLabel.Font = Enum.Font.GothamBold
+    splashLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    splashLabel.TextScaled = true
+    splashLabel.Parent = splashFrame
 
     task.wait(2)
-    local fadeOut = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 1})
-    fadeOut:Play()
-    fadeOut.Completed:Wait()
-
-    -- Remove GUI after fade
-    task.wait(0.5)
-    screenGui:Destroy()
+    splashGui:Destroy()
 end
 
--- Function to create a window
-function Library:CreateWindow(windowTitle)
-    local TweenService = game:GetService("TweenService")
-    local player = game.Players.LocalPlayer
-    local playerGui = player:WaitForChild("PlayerGui")
+function Library:CreateWindow(title)
+    showSplash()
 
-    -- Create ScreenGui
-    local screenGui = Instance.new("ScreenGui", playerGui)
-    screenGui.Name = windowTitle .. "_UI"
-    screenGui.ResetOnSpawn = false
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "Lume"
+    gui.Parent = game:GetService("CoreGui")
 
-    -- Create Main Frame
-    local mainFrame = Instance.new("Frame")
-    mainFrame.Size = UDim2.new(0, 400, 0, 350)
-    mainFrame.Position = UDim2.new(0.5, -200, 0.5, -125)
-    mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    mainFrame.BorderSizePixel = 0
-    mainFrame.Active = true
-    mainFrame.Draggable = true
-    mainFrame.Parent = screenGui
+    local window = Instance.new("Frame")
+    window.Name = title
+    window.Size = UDim2.new(0, 400, 0, 300)
+    window.Position = UDim2.new(0.5, -200, 0.5, -150)
+    window.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    window.AnchorPoint = Vector2.new(0.5, 0.5)
+    window.Parent = gui
 
-    -- Inner Border (Example customization)
-    local innerStroke = Instance.new("UIStroke", mainFrame)
-    innerStroke.Thickness = 2
-    innerStroke.Color = Color3.fromRGB(255, 0, 0)
-
-    -- Title
-    local title = Instance.new("TextLabel")
-    title.Size = UDim2.new(1, -60, 0, 40)
-    title.Position = UDim2.new(0, 10, 0, 0)
-    title.BackgroundTransparency = 1
-    title.Text = windowTitle
-    title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    title.Font = Enum.Font.GothamBold
-    title.TextSize = 22
-    title.TextXAlignment = Enum.TextXAlignment.Left
-    title.Name = "Title"
-    title.Parent = mainFrame
-
-    -- Close Button [X]
-    local closeBtn = Instance.new("TextButton")
-    closeBtn.Size = UDim2.new(0, 30, 0, 30)
-    closeBtn.Position = UDim2.new(1, -35, 0, 5)
-    closeBtn.Text = "X"
-    closeBtn.TextColor3 = Color3.fromRGB(255, 0, 0)
-    closeBtn.BackgroundTransparency = 1
-    closeBtn.Font = Enum.Font.GothamBold
-    closeBtn.TextSize = 18
-    closeBtn.Name = "CloseButton"
-    closeBtn.Parent = mainFrame
-
-    closeBtn.MouseButton1Click:Connect(function()
-        screenGui:Destroy()
-    end)
-
-    -- Minimize Button [–]
-    local minimizeBtn = Instance.new("TextButton")
-    minimizeBtn.Size = UDim2.new(0, 30, 0, 30)
-    minimizeBtn.Position = UDim2.new(1, -70, 0, 5)
-    minimizeBtn.Text = "-"
-    minimizeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
-    minimizeBtn.BackgroundTransparency = 1
-    minimizeBtn.Font = Enum.Font.GothamBold
-    minimizeBtn.TextSize = 22
-    minimizeBtn.Name = "MinimizeButton"
-    minimizeBtn.Parent = mainFrame
-
-    -- Content Frame
     local contentFrame = Instance.new("Frame")
-    contentFrame.Name = "ContentFrame"
-    contentFrame.Size = UDim2.new(1, 0, 1, -40)
-    contentFrame.Position = UDim2.new(0, 0, 0, 40)
+    contentFrame.Name = "Content"
+    contentFrame.Size = UDim2.new(1, -20, 1, -20)
+    contentFrame.Position = UDim2.new(0, 10, 0, 10)
     contentFrame.BackgroundTransparency = 1
-    contentFrame.Parent = mainFrame
+    contentFrame.Parent = window
 
-    -- Example content
-    local exampleLabel = Instance.new("TextLabel", contentFrame)
-    exampleLabel.Size = UDim2.new(1, -20, 0, 40)
-    exampleLabel.Position = UDim2.new(0, 10, 0, 10)
-    exampleLabel.Text = "Beste UI von Avi Daddy"
-    exampleLabel.BackgroundTransparency = 1
-    exampleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    exampleLabel.Font = Enum.Font.Gotham
-    exampleLabel.TextSize = 18
+    local layout = Instance.new("UIListLayout")
+    layout.Padding = UDim.new(0, 6)
+    layout.Parent = contentFrame
 
-    -- Minimize Logic
-    local isMinimized = false
-    minimizeBtn.MouseButton1Click:Connect(function()
-        isMinimized = not isMinimized
-        contentFrame.Visible = not isMinimized
-        if isMinimized then
-            mainFrame.Size = UDim2.new(0, 400, 0, 50)
-        else
-            mainFrame.Size = UDim2.new(0, 400, 0, 250)
+    -- Return window object with methods
+    return {
+        Gui = gui,
+        Window = window,
+        Content = contentFrame,
+
+        AddButton = function(self, text, callback)
+            local button = Instance.new("TextButton")
+            button.Name = text
+            button.Text = text
+            button.Size = UDim2.new(1, 0, 0, 30)
+            button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            button.TextColor3 = Color3.new(1, 1, 1)
+            button.Font = Enum.Font.Gotham
+            button.TextSize = 14
+            button.Parent = self.Content
+
+            button.MouseButton1Click:Connect(function()
+                callback()
+            end)
         end
-    end)
-
-    task.wait(0.6)
+    }
 end
 
 return Library
