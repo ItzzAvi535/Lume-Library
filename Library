@@ -196,7 +196,7 @@ function Library:CreateWindow(title)
 			local toggleButton = Instance.new("ImageButton")
 			toggleButton.Size = UDim2.new(0, 35, 0, 35)
 			toggleButton.Position = UDim2.new(0, 0, 0, 0)
-			toggleButton.Image = "rbxassetid://72438488576923"
+			toggleButton.Image = "rbxassetid://103227726468628"
 			toggleButton.BackgroundTransparency = 1
 			toggleButton.Parent = toggleFrame
 
