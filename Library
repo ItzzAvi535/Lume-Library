@@ -1,76 +1,61 @@
 local Library = {}
 
-local TweenService = game:GetService("TweenService")
-local player = game.Players.LocalPlayer
-local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-screenGui.ResetOnSpawn = false
-
-local textLabel = Instance.new("TextLabel")
-textLabel.Parent = screenGui
-textLabel.Size = UDim2.new(0, 400, 0, 50)
-textLabel.Position = UDim2.new(0.5, -200, 0.5, -25)
-textLabel.BackgroundTransparency = 1
-textLabel.Text = "Lume Library </>"
-textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-textLabel.TextScaled = true
-textLabel.Font = Enum.Font.GothamBold
-textLabel.TextTransparency = 1
-
--- Fade In
-local fadeIn = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 0})
-fadeIn:Play()
-fadeIn.Completed:Wait()
-
--- Wait and then Fade Out
-task.wait(2)
-local fadeOut = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 1})
-fadeOut:Play()
-fadeOut.Completed:Wait()
-
--- Remove GUI after fade
-task.wait(0.5)
-screenGui:Destroy()
-
--- Setup Prefabs properly
-local Prefabs = Instance.new("Folder")
-Prefabs.Name = "Prefabs"
-Prefabs.Parent = game:GetService("CoreGui") -- or anywhere visible and valid
-
--- Create and store the prefab
-local Window = Instance.new("ImageLabel")
-Window.Name = "Window"
-Window.Parent = Prefabs
-Window.Active = true
-Window.BackgroundColor3 = Color3.new(1, 1, 1)
-Window.BackgroundTransparency = 1
-Window.ClipsDescendants = true
-Window.Position = UDim2.new(0.5, -200, 0.5, -125)
-Window.Selectable = true
-Window.Size = UDim2.new(0, 600, 0, 350)
-Window.Image = "rbxassetid://2851926732"
-Window.ImageColor3 = Color3.fromRGB(21, 22, 23)
-Window.ScaleType = Enum.ScaleType.Slice
-Window.SliceCenter = Rect.new(12, 12, 12, 12)
-
--- Make sure Windows frame exists
-local Windows = Instance.new("Frame")
-Windows.Name = "Windows"
-Windows.Parent = game:GetService("CoreGui")
-Windows.Size = UDim2.new(1, 0, 1, 0)
-Windows.BackgroundTransparency = 1
-
 function Library:CreateWindow(title)
-    windows = windows + 1
-	local dropdown_open = false
-	title = tostring(title or "New Window")
-	options = (typeof(options) == "table") and options or ui_options
-	options.tween_time = 0.1
+    local player = game.Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
 
-	local Window = Prefabs:FindFirstChild("Window"):Clone()
-	Window.Parent = Windows
-	Window:FindFirstChild("Title").Text = title
-	Window.Size = UDim2.new(0, options.min_size.X, 0, options.min_size.Y)
-	Window.ZIndex = Window.ZIndex + (windows * 10)
+    local screenGui = Instance.new("ScreenGui", playerGui)
+    screenGui.Name = "Window_" .. tostring(math.random(1000, 9999))
+    screenGui.ResetOnSpawn = false
+
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Size = UDim2.new(0, 400, 0, 350)
+    mainFrame.Position = UDim2.new(0.5, -200, 0.5, -125)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    mainFrame.BorderSizePixel = 0
+    mainFrame.Active = true
+    mainFrame.Draggable = true
+    mainFrame.Parent = screenGui
+
+    -- Title
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Size = UDim2.new(1, -60, 0, 40)
+    titleLabel.Position = UDim2.new(0, 10, 0, 0)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.Text = title or "New Window"
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.Font = Enum.Font.GothamBold
+    titleLabel.TextSize = 22
+    titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+    titleLabel.Name = "Title"
+    titleLabel.Parent = mainFrame
+
+    local contentFrame = Instance.new("Frame")
+    contentFrame.Name = "ContentFrame"
+    contentFrame.Position = UDim2.new(0, 0, 0, 50)
+    contentFrame.Size = UDim2.new(1, 0, 1, -50)
+    contentFrame.BackgroundTransparency = 1
+    contentFrame.Parent = mainFrame
+
+    local layout = Instance.new("UIListLayout", contentFrame)
+    layout.Padding = UDim.new(0, 6)
+
+    local window = {}
+
+    function window:AddButton(text, callback)
+        local button = Instance.new("TextButton")
+        button.Size = UDim2.new(1, -20, 0, 40)
+        button.Text = text
+        button.Position = UDim2.new(0, 10, 0, 0)
+        button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+        button.TextColor3 = Color3.new(1, 1, 1)
+        button.Font = Enum.Font.Gotham
+        button.TextSize = 18
+        button.Parent = contentFrame
+        button.MouseButton1Click:Connect(callback)
+    end
+
+    return window
 end
 
 return Library
