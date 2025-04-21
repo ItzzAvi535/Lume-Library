@@ -185,6 +185,44 @@ function Library:CreateWindow(title)
 			button.MouseButton1Click:Connect(callback)
 		end
 
+		function tab:AddToggle(text, onFunc, offFunc)
+			local isToggled = false
+
+			local toggleFrame = Instance.new("Frame")
+			toggleFrame.Size = UDim2.new(0, 200, 0, 35)
+			toggleFrame.BackgroundTransparency = 1
+			toggleFrame.Parent = tabFrame
+
+			local toggleButton = Instance.new("ImageButton")
+			toggleButton.Size = UDim2.new(0, 35, 0, 35)
+			toggleButton.Position = UDim2.new(0, 0, 0, 0)
+			toggleButton.Image = "rbxassetid://72438488576923"
+			toggleButton.BackgroundTransparency = 1
+			toggleButton.Parent = toggleFrame
+
+			local toggleLabel = Instance.new("TextLabel")
+			toggleLabel.Size = UDim2.new(1, -40, 1, 0)
+			toggleLabel.Position = UDim2.new(0, 40, 0, 0)
+			toggleLabel.Text = text
+			toggleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+			toggleLabel.Font = Enum.Font.Gotham
+			toggleLabel.TextSize = 14
+			toggleLabel.BackgroundTransparency = 1
+			toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
+			toggleLabel.Parent = toggleFrame
+
+			toggleButton.MouseButton1Click:Connect(function()
+				isToggled = not isToggled
+				if isToggled then
+					toggleButton.Image = "rbxassetid://133005540629097"
+					if onFunc then onFunc() end
+				else
+					toggleButton.Image = "rbxassetid://72438488576923"
+					if offFunc then offFunc() end
+				end
+			end)
+		end
+
 		if not currentTab then
 			currentTab = tabFrame
 			tabFrame.Visible = true
