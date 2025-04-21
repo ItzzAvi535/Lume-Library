@@ -214,10 +214,10 @@ function Library:CreateWindow(title)
 			toggleButton.MouseButton1Click:Connect(function()
 				isToggled = not isToggled
 				if isToggled then
-					toggleButton.Image = "rbxassetid://133005540629097"
+					toggleButton.Image = "rbxassetid://126778824568302"
 					if onFunc then onFunc() end
 				else
-					toggleButton.Image = "rbxassetid://72438488576923"
+					toggleButton.Image = "rbxassetid://103227726468628"
 					if offFunc then offFunc() end
 				end
 			end)
