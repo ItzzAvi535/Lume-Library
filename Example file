@@ -8,6 +8,4 @@ tab:AddButton("Name of the Button", function()
     -- Your Function here
 end)
 
-tab:AddButton("Name of the Button", function()
-    -- Your Function here
-end)
+local tab = window:AddTab("Settings")
