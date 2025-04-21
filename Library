@@ -186,42 +186,72 @@ function Library:CreateWindow(title)
 		end
 
 		function tab:AddToggle(text, onFunc, offFunc)
-			local isToggled = false
+	local isToggled = false
 
-			local toggleFrame = Instance.new("Frame")
-			toggleFrame.Size = UDim2.new(0, 200, 0, 35)
-			toggleFrame.BackgroundTransparency = 1
-			toggleFrame.Parent = tabFrame
+	local toggleFrame = Instance.new("Frame")
+	toggleFrame.Size = UDim2.new(0, 200, 0, 35)
+	toggleFrame.BackgroundTransparency = 1
+	toggleFrame.Parent = tabFrame
 
-			local toggleButton = Instance.new("ImageButton")
-			toggleButton.Size = UDim2.new(0, 35, 0, 35)
-			toggleButton.Position = UDim2.new(0, 0, 0, 0)
-			toggleButton.Image = "rbxassetid://103227726468628"
-			toggleButton.BackgroundTransparency = 1
-			toggleButton.Parent = toggleFrame
+	local toggleBackground = Instance.new("Frame")
+	toggleBackground.Size = UDim2.new(0, 50, 0, 25)
+	toggleBackground.Position = UDim2.new(0, 0, 0.5, -12)
+	toggleBackground.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	toggleBackground.BorderSizePixel = 0
+	toggleBackground.Parent = toggleFrame
 
-			local toggleLabel = Instance.new("TextLabel")
-			toggleLabel.Size = UDim2.new(1, -40, 1, 0)
-			toggleLabel.Position = UDim2.new(0, 40, 0, 0)
-			toggleLabel.Text = text
-			toggleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-			toggleLabel.Font = Enum.Font.Gotham
-			toggleLabel.TextSize = 14
-			toggleLabel.BackgroundTransparency = 1
-			toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
-			toggleLabel.Parent = toggleFrame
+	local bgCorner = Instance.new("UICorner")
+	bgCorner.CornerRadius = UDim.new(1, 0)
+	bgCorner.Parent = toggleBackground
 
-			toggleButton.MouseButton1Click:Connect(function()
-				isToggled = not isToggled
-				if isToggled then
-					toggleButton.Image = "rbxassetid://126778824568302"
-					if onFunc then onFunc() end
-				else
-					toggleButton.Image = "rbxassetid://103227726468628"
-					if offFunc then offFunc() end
-				end
-			end)
+	local toggleCircle = Instance.new("Frame")
+	toggleCircle.Size = UDim2.new(0, 20, 0, 20)
+	toggleCircle.Position = UDim2.new(0, 3, 0.5, -10)
+	toggleCircle.BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+	toggleCircle.BorderSizePixel = 0
+	toggleCircle.Parent = toggleBackground
+
+	local circleCorner = Instance.new("UICorner")
+	circleCorner.CornerRadius = UDim.new(1, 0)
+	circleCorner.Parent = toggleCircle
+
+	local toggleLabel = Instance.new("TextLabel")
+	toggleLabel.Size = UDim2.new(1, -60, 1, 0)
+	toggleLabel.Position = UDim2.new(0, 60, 0, 0)
+	toggleLabel.Text = text
+	toggleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+	toggleLabel.Font = Enum.Font.Gotham
+	toggleLabel.TextSize = 14
+	toggleLabel.BackgroundTransparency = 1
+	toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
+	toggleLabel.Parent = toggleFrame
+
+	toggleBackground.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			isToggled = not isToggled
+
+			if isToggled then
+				TweenService:Create(toggleCircle, TweenInfo.new(0.2), {
+					Position = UDim2.new(1, -23, 0.5, -10),
+					BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+				}):Play()
+				TweenService:Create(toggleBackground, TweenInfo.new(0.2), {
+					BackgroundColor3 = Color3.fromRGB(70, 0, 0)
+				}):Play()
+				if onFunc then onFunc() end
+			else
+				TweenService:Create(toggleCircle, TweenInfo.new(0.2), {
+					Position = UDim2.new(0, 3, 0.5, -10),
+					BackgroundColor3 = Color3.fromRGB(150, 150, 150)
+				}):Play()
+				TweenService:Create(toggleBackground, TweenInfo.new(0.2), {
+					BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+				}):Play()
+				if offFunc then offFunc() end
+			end
 		end
+	end)
+end
 
 		if not currentTab then
 			currentTab = tabFrame
