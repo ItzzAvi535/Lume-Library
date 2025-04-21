@@ -185,17 +185,22 @@ function Library:CreateWindow(title)
 			button.MouseButton1Click:Connect(callback)
 		end
 
-		function tab:AddToggle(text, onFunc, offFunc, default)
-	local isToggled = default or false
+		function tab:AddToggle(text, callback)
+	local Toggle = {
+		Value = false,
+		Callback = callback or function() end
+	}
+
+	local TweenService = game:GetService("TweenService")
 
 	local toggleFrame = Instance.new("Frame")
-	toggleFrame.Size = UDim2.new(0, 200, 0, 35)
+	toggleFrame.Size = UDim2.new(1, 0, 0, 35)
 	toggleFrame.BackgroundTransparency = 1
-	toggleFrame.Parent = tabFrame
+	toggleFrame.Parent = self.Container
 
 	local toggleLabel = Instance.new("TextLabel")
-	toggleLabel.Size = UDim2.new(1, -60, 1, 0)
-	toggleLabel.Position = UDim2.new(0, 60, 0, 0)
+	toggleLabel.Size = UDim2.new(1, -54, 1, 0)
+	toggleLabel.Position = UDim2.new(0, 10, 0, 0)
 	toggleLabel.Text = text
 	toggleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 	toggleLabel.Font = Enum.Font.Gotham
@@ -204,70 +209,64 @@ function Library:CreateWindow(title)
 	toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
 	toggleLabel.Parent = toggleFrame
 
-	local toggleBackground = Instance.new("Frame")
-	toggleBackground.Size = UDim2.new(0, 36, 0, 18)
-	toggleBackground.Position = UDim2.new(0, 10, 0.5, -9)
-	toggleBackground.BackgroundTransparency = 1
-	toggleBackground.Parent = toggleFrame
+	local toggleCircle = Instance.new("ImageLabel")
+	toggleCircle.AnchorPoint = Vector2.new(0, 0.5)
+	toggleCircle.Size = UDim2.fromOffset(14, 14)
+	toggleCircle.Position = UDim2.new(0, 2, 0.5, 0)
+	toggleCircle.Image = "http://www.roblox.com/asset/?id=12266946128"
+	toggleCircle.ImageTransparency = 0.5
+	toggleCircle.BackgroundTransparency = 1
+	toggleCircle.ImageColor3 = Color3.fromRGB(200, 200, 200)
 
 	local toggleBorder = Instance.new("UIStroke")
-	toggleBorder.Thickness = 1.5
 	toggleBorder.Transparency = 0.5
-	toggleBorder.Color = isToggled and Color3.fromRGB(255, 60, 60) or Color3.fromRGB(120, 120, 120)
-	toggleBorder.Parent = toggleBackground
+	toggleBorder.Color = Color3.fromRGB(200, 200, 200)
+	toggleBorder.Parent = toggleCircle
 
-	local toggleCorner = Instance.new("UICorner")
-	toggleCorner.CornerRadius = UDim.new(0, 9)
-	toggleCorner.Parent = toggleBackground
+	local toggleSlider = Instance.new("Frame")
+	toggleSlider.Size = UDim2.fromOffset(36, 18)
+	toggleSlider.AnchorPoint = Vector2.new(1, 0.5)
+	toggleSlider.Position = UDim2.new(1, -10, 0.5, 0)
+	toggleSlider.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+	toggleSlider.BackgroundTransparency = 1
+	toggleSlider.Parent = toggleFrame
 
-	local toggleCircle = Instance.new("Frame")
-	toggleCircle.Size = UDim2.new(0, 14, 0, 14)
-	toggleCircle.Position = isToggled and UDim2.new(0, 19, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)
-	toggleCircle.AnchorPoint = Vector2.new(0, 0.5)
-	toggleCircle.BackgroundColor3 = isToggled and Color3.fromRGB(255, 60, 60) or Color3.fromRGB(150, 150, 150)
-	toggleCircle.BackgroundTransparency = isToggled and 0 or 0.5
-	toggleCircle.BorderSizePixel = 0
-	toggleCircle.Parent = toggleBackground
+	local toggleSliderCorner = Instance.new("UICorner")
+	toggleSliderCorner.CornerRadius = UDim.new(0, 9)
+	toggleSliderCorner.Parent = toggleSlider
 
-	local toggleCircleCorner = Instance.new("UICorner")
-	toggleCircleCorner.CornerRadius = UDim.new(1, 0)
-	toggleCircleCorner.Parent = toggleCircle
+	toggleCircle.Parent = toggleSlider
 
-	local function setToggle(state)
-		isToggled = state
+	local function setValue(value)
+		Toggle.Value = value
 
-		local goalPos = isToggled and UDim2.new(0, 19, 0.5, -7) or UDim2.new(0, 2, 0.5, -7)
-		local goalColor = isToggled and Color3.fromRGB(255, 60, 60) or Color3.fromRGB(150, 150, 150)
-		local goalBG = isToggled and 0 or 1
-		local goalBorderColor = isToggled and Color3.fromRGB(255, 60, 60) or Color3.fromRGB(120, 120, 120)
-
-		TweenService:Create(toggleCircle, TweenInfo.new(0.25), {
-			Position = goalPos,
-			BackgroundColor3 = goalColor,
-			BackgroundTransparency = isToggled and 0 or 0.5
+		TweenService:Create(toggleCircle, TweenInfo.new(0.25, Enum.EasingStyle.Quint), {
+			Position = UDim2.new(0, value and 19 or 2, 0.5, 0),
+			ImageColor3 = value and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(200, 200, 200)
 		}):Play()
 
-		TweenService:Create(toggleBackground, TweenInfo.new(0.25), {
-			BackgroundTransparency = goalBG
+		TweenService:Create(toggleSlider, TweenInfo.new(0.25, Enum.EasingStyle.Quint), {
+			BackgroundTransparency = value and 0 or 1
 		}):Play()
 
-		TweenService:Create(toggleBorder, TweenInfo.new(0.25), {
-			Color = goalBorderColor
-		}):Play()
+		toggleBorder.Color = value and Color3.fromRGB(255, 0, 0) or Color3.fromRGB(200, 200, 200)
+		toggleCircle.ImageTransparency = value and 0 or 0.5
 
-		if isToggled then
-			if onFunc then onFunc() end
-		else
-			if offFunc then offFunc() end
+		if Toggle.Callback then
+			Toggle.Callback(value)
 		end
 	end
 
-	toggleBackground.InputBegan:Connect(function(input)
+	toggleFrame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			setToggle(not isToggled)
+			setValue(not Toggle.Value)
 		end
 	end)
 
+	setValue(false)
+
+	return Toggle
+end
 	-- Important part dont delete
 	setToggle(isToggled)
 end
