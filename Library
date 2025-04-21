@@ -1,184 +1,201 @@
-local Library = {}
+local library = {}
 
 local TweenService = game:GetService("TweenService")
 local player = game.Players.LocalPlayer
 
--- Splash Screen
+-- Splash Screen (auto run once on require)
 task.spawn(function()
-	local splashGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-	splashGui.ResetOnSpawn = false
-	splashGui.Name = "LumeSplash"
+  local splashGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+  splashGui.ResetOnSpawn = false
+  splashGui.Name = "LumeSplash"
 
-	local textLabel = Instance.new("TextLabel")
-	textLabel.Parent = splashGui
-	textLabel.Size = UDim2.new(0, 400, 0, 50)
-	textLabel.Position = UDim2.new(0.5, -200, 0.5, -25)
-	textLabel.BackgroundTransparency = 1
-	textLabel.Text = "Lume Library </>"
-	textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-	textLabel.TextScaled = true
-	textLabel.Font = Enum.Font.GothamBold
-	textLabel.TextTransparency = 1
+  local textLabel = Instance.new("TextLabel")
+  textLabel.Parent = splashGui
+  textLabel.Size = UDim2.new(0, 400, 0, 50)
+  textLabel.Position = UDim2.new(0.5, -200, 0.5, -25)
+  textLabel.BackgroundTransparency = 1
+  textLabel.Text = "Lume Library </>"
+  textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+  textLabel.TextScaled = true
+  textLabel.Font = Enum.Font.GothamBold
+  textLabel.TextTransparency = 1
 
-	local fadeIn = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 0})
-	fadeIn:Play()
-	fadeIn.Completed:Wait()
+  local fadeIn = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 0})
+  fadeIn:Play()
+  fadeIn.Completed:Wait()
 
-	task.wait(1.5)
+  task.wait(1.5)
 
-	local fadeOut = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 1})
-	fadeOut:Play()
-	fadeOut.Completed:Wait()
+  local fadeOut = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 1})
+  fadeOut:Play()
+  fadeOut.Completed:Wait()
 
-	splashGui:Destroy()
+  splashGui:Destroy()
 end)
 
-function Library:CreateWindow(title)
-	local playerGui = player:WaitForChild("PlayerGui")
+-- Window Creation
+function library:CreateWindow(title)
+  local playerGui = player:WaitForChild("PlayerGui")
 
-	local screenGui = Instance.new("ScreenGui", playerGui)
-	screenGui.Name = "LumeWindow_" .. tostring(math.random(1000, 9999))
-	screenGui.ResetOnSpawn = false
+  -- ScreenGui
+  local screenGui = Instance.new("ScreenGui", playerGui)
+  screenGui.Name = "AviVyxon_UI_" .. tostring(math.random(1000, 9999))
+  screenGui.ResetOnSpawn = false
 
-	local mainFrame = Instance.new("Frame")
-	mainFrame.Size = UDim2.new(0, 600, 0, 350)
-	mainFrame.Position = UDim2.new(0.5, -300, 0.5, -175)
-	mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-	mainFrame.BorderSizePixel = 0
-	mainFrame.Active = true
-	mainFrame.Draggable = true
-	mainFrame.Parent = screenGui
+  -- Main Frame
+  local mainFrame = Instance.new("Frame")
+  mainFrame.Size = UDim2.new(0, 600, 0, 350)
+  mainFrame.Position = UDim2.new(0.5, -300, 0.5, -175)
+  mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+  mainFrame.BorderSizePixel = 0
+  mainFrame.Active = true
+  mainFrame.Draggable = true
+  mainFrame.Parent = screenGui
 
-	local innerStroke = Instance.new("UIStroke", mainFrame)
-	innerStroke.Thickness = 2
-	innerStroke.Color = Color3.fromRGB(255, 0, 0)
+  -- Inner Border
+  local innerStroke = Instance.new("UIStroke", mainFrame)
+  innerStroke.Thickness = 2
+  innerStroke.Color = Color3.fromRGB(255, 0, 0)
 
-	local outerFrame = Instance.new("Frame")
-	outerFrame.Size = UDim2.new(1, 8, 1, 8)
-	outerFrame.Position = UDim2.new(0, -4, 0, -4)
-	outerFrame.BackgroundTransparency = 1
-	outerFrame.Parent = mainFrame
+  -- Outer Border
+  local outerFrame = Instance.new("Frame")
+  outerFrame.Size = UDim2.new(1, 8, 1, 8)
+  outerFrame.Position = UDim2.new(0, -4, 0, -4)
+  outerFrame.BackgroundTransparency = 1
+  outerFrame.Parent = mainFrame
 
-	local outerStroke = Instance.new("UIStroke", outerFrame)
-	outerStroke.Thickness = 2
-	outerStroke.Color = Color3.fromRGB(255, 0, 0)
+  local outerStroke = Instance.new("UIStroke", outerFrame)
+  outerStroke.Thickness = 2
+  outerStroke.Color = Color3.fromRGB(255, 0, 0)
 
-	Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 10)
-	Instance.new("UICorner", outerFrame).CornerRadius = UDim.new(0, 12)
+  -- Corners
+  Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 10)
+  Instance.new("UICorner", outerFrame).CornerRadius = UDim.new(0, 12)
 
-	local titleLabel = Instance.new("TextLabel")
-	titleLabel.Size = UDim2.new(1, -60, 0, 40)
-	titleLabel.Position = UDim2.new(0, 10, 0, 0)
-	titleLabel.BackgroundTransparency = 1
-	titleLabel.Text = title or "Lume Window"
-	titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-	titleLabel.Font = Enum.Font.GothamBold
-	titleLabel.TextSize = 22
-	titleLabel.TextXAlignment = Enum.TextXAlignment.Left
-	titleLabel.Name = "Title"
-	titleLabel.Parent = mainFrame
+  -- Title
+  local titleLabel = Instance.new("TextLabel")
+  titleLabel.Size = UDim2.new(1, -60, 0, 40)
+  titleLabel.Position = UDim2.new(0, 10, 0, 0)
+  titleLabel.BackgroundTransparency = 1
+  titleLabel.Text = title or "Avi & Vyxon‘s UI"
+  titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+  titleLabel.Font = Enum.Font.GothamBold
+  titleLabel.TextSize = 22
+  titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+  titleLabel.Name = "Title"
+  titleLabel.Parent = mainFrame
 
-	local tabHolder = Instance.new("Frame")
-	tabHolder.Size = UDim2.new(0, 120, 1, -50)
-	tabHolder.Position = UDim2.new(0, 0, 0, 50)
-	tabHolder.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-	tabHolder.BorderSizePixel = 0
-	tabHolder.Parent = mainFrame
+  -- Tab Buttons Frame
+  local tabButtonsFrame = Instance.new("Frame")
+  tabButtonsFrame.Size = UDim2.new(0, 120, 1, 0)
+  tabButtonsFrame.Position = UDim2.new(0, 0, 0, 50)
+  tabButtonsFrame.BackgroundTransparency = 1
+  tabButtonsFrame.Parent = mainFrame
 
-	local tabLayout = Instance.new("UIListLayout", tabHolder)
-	tabLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	tabLayout.Padding = UDim.new(0, 5)
+  local layout = Instance.new("UIListLayout", tabButtonsFrame)
+  layout.Padding = UDim.new(0, 6)
 
-	local contentFrame = Instance.new("Frame")
-	contentFrame.Position = UDim2.new(0, 120, 0, 50)
-	contentFrame.Size = UDim2.new(1, -120, 1, -50)
-	contentFrame.BackgroundTransparency = 1
-	contentFrame.Parent = mainFrame
+  -- Tab Content Frame
+  local contentFrame = Instance.new("Frame")
+  contentFrame.Name = "ContentFrame"
+  contentFrame.Position = UDim2.new(0, 120, 0, 50)
+  contentFrame.Size = UDim2.new(1, -120, 1, -50)
+  contentFrame.BackgroundTransparency = 1
+  contentFrame.Parent = mainFrame
 
-	local closeBtn = Instance.new("TextButton")
-	closeBtn.Size = UDim2.new(0, 30, 0, 30)
-	closeBtn.Position = UDim2.new(1, -35, 0, 5)
-	closeBtn.Text = "X"
-	closeBtn.TextColor3 = Color3.fromRGB(255, 0, 0)
-	closeBtn.BackgroundTransparency = 1
-	closeBtn.Font = Enum.Font.GothamBold
-	closeBtn.TextSize = 18
-	closeBtn.Parent = mainFrame
-	closeBtn.MouseButton1Click:Connect(function()
-		screenGui:Destroy()
-	end)
+  local tabFrames = {}
 
-	local minimizeBtn = Instance.new("TextButton")
-	minimizeBtn.Size = UDim2.new(0, 30, 0, 30)
-	minimizeBtn.Position = UDim2.new(1, -70, 0, 5)
-	minimizeBtn.Text = "-"
-	minimizeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
-	minimizeBtn.BackgroundTransparency = 1
-	minimizeBtn.Font = Enum.Font.GothamBold
-	minimizeBtn.TextSize = 22
-	minimizeBtn.Parent = mainFrame
+  -- Function to create a new tab
+  function library:AddTab(tabName)
+    local tabButton = Instance.new("TextButton")
+    tabButton.Size = UDim2.new(1, -20, 0, 40)
+    tabButton.Position = UDim2.new(0, 10, 0, 0)
+    tabButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    tabButton.TextColor3 = Color3.new(1, 1, 1)
+    tabButton.Font = Enum.Font.Gotham
+    tabButton.TextSize = 18
+    tabButton.Text = tabName
+    tabButton.Parent = tabButtonsFrame
 
-	local isMinimized = false
-	minimizeBtn.MouseButton1Click:Connect(function()
-		isMinimized = not isMinimized
-		contentFrame.Visible = not isMinimized
-		tabHolder.Visible = not isMinimized
-		if isMinimized then
-			mainFrame.Size = UDim2.new(0, 600, 0, 50)
-		else
-			mainFrame.Size = UDim2.new(0, 600, 0, 350)
-		end
-	end)
+    -- Tab Content Frame
+    local tabFrame = Instance.new("Frame")
+    tabFrame.Size = UDim2.new(1, 0, 1, 0)
+    tabFrame.BackgroundTransparency = 1
+    tabFrame.Visible = false
+    tabFrame.Parent = contentFrame
 
-	local window = {}
+    tabFrames[tabName] = tabFrame
 
-	function window:AddTab(tabName)
-		local tabButton = Instance.new("TextButton")
-		tabButton.Size = UDim2.new(1, -10, 0, 30)
-		tabButton.Text = tabName
-		tabButton.Font = Enum.Font.Gotham
-		tabButton.TextColor3 = Color3.new(1, 1, 1)
-		tabButton.TextSize = 16
-		tabButton.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-		tabButton.Parent = tabHolder
+    -- Tab Button click function to show tab content
+    tabButton.MouseButton1Click:Connect(function()
+      for _, frame in pairs(tabFrames) do
+        frame.Visible = false
+      end
+      tabFrame.Visible = true
+    end)
 
-		local tabContent = Instance.new("Frame")
-		tabContent.Size = UDim2.new(1, 0, 1, 0)
-		tabContent.BackgroundTransparency = 1
-		tabContent.Visible = false
-		tabContent.Parent = contentFrame
+    return tabFrame
+  end
 
-		local layout = Instance.new("UIListLayout", tabContent)
-		layout.Padding = UDim.new(0, 6)
+  -- Close Button
+  local closeBtn = Instance.new("TextButton")
+  closeBtn.Size = UDim2.new(0, 30, 0, 30)
+  closeBtn.Position = UDim2.new(1, -35, 0, 5)
+  closeBtn.Text = "X"
+  closeBtn.TextColor3 = Color3.fromRGB(255, 0, 0)
+  closeBtn.BackgroundTransparency = 1
+  closeBtn.Font = Enum.Font.GothamBold
+  closeBtn.TextSize = 18
+  closeBtn.Name = "CloseButton"
+  closeBtn.Parent = mainFrame
 
-		tabButton.MouseButton1Click:Connect(function()
-			for _, tab in pairs(contentFrame:GetChildren()) do
-				if tab:IsA("Frame") then
-					tab.Visible = false
-				end
-			end
-			tabContent.Visible = true
-		end)
+  closeBtn.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+  end)
 
-		local tab = {}
+  -- Minimize Button
+  local minimizeBtn = Instance.new("TextButton")
+  minimizeBtn.Size = UDim2.new(0, 30, 0, 30)
+  minimizeBtn.Position = UDim2.new(1, -70, 0, 5)
+  minimizeBtn.Text = "-"
+  minimizeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+  minimizeBtn.BackgroundTransparency = 1
+  minimizeBtn.Font = Enum.Font.GothamBold
+  minimizeBtn.TextSize = 22
+  minimizeBtn.Name = "MinimizeButton"
+  minimizeBtn.Parent = mainFrame
 
-		function tab:AddButton(text, callback)
-			local button = Instance.new("TextButton")
-			button.Size = UDim2.new(1, -20, 0, 40)
-			button.Position = UDim2.new(0, 10, 0, 0)
-			button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-			button.TextColor3 = Color3.new(1, 1, 1)
-			button.Font = Enum.Font.Gotham
-			button.TextSize = 18
-			button.Text = text
-			button.Parent = tabContent
-			button.MouseButton1Click:Connect(callback)
-		end
+  local isMinimized = false
+  minimizeBtn.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+    contentFrame.Visible = not isMinimized
+    if isMinimized then
+      mainFrame.Size = UDim2.new(0, 400, 0, 50)
+    else
+      mainFrame.Size = UDim2.new(0, 400, 0, 350)
+    end
+  end)
 
-		return tab
-	end
+  -- Wait for the splash screen to finish before showing the main UI
+  task.wait(1.5)
 
-	return window
+  -- Return window with AddButton method
+  local window = {}
+
+  function window:AddButton(text, callback)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(1, -20, 0, 40)
+    button.Position = UDim2.new(0, 10, 0, 0)
+    button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    button.TextColor3 = Color3.new(1, 1, 1)
+    button.Font = Enum.Font.Gotham
+    button.TextSize = 18
+    button.Text = text
+    button.Parent = contentFrame
+    button.MouseButton1Click:Connect(callback)
+  end
+
+  return window
 end
 
-return Library
+return library
