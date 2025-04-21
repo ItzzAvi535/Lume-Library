@@ -4,7 +4,6 @@ local TweenService = game:GetService("TweenService")
 local player = game.Players.LocalPlayer
 local isSplashFinished = false -- Flag to check if the splash screen is done
 
--- Splash Screen (auto run once on require)
 task.spawn(function()
 	local splashGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
 	splashGui.ResetOnSpawn = false
@@ -33,25 +32,21 @@ task.spawn(function()
 
 	splashGui:Destroy()
 	
-	-- Set the flag to true once splash screen is finished
 	isSplashFinished = true
 end)
 
--- Window Creation
 function Library:CreateWindow(title)
-	-- Wait until splash screen finishes
+	-- Do not delete this 
 	while not isSplashFinished do
-		task.wait(0.1) -- Wait for the splash screen to finish
+		task.wait(0.1) -- Wait for the splash screen to finish to create window
 	end
 	
 	local playerGui = player:WaitForChild("PlayerGui")
 
-	-- ScreenGui
 	local screenGui = Instance.new("ScreenGui", playerGui)
 	screenGui.Name = "AviVyxon_UI_" .. tostring(math.random(1000, 9999))
 	screenGui.ResetOnSpawn = false
 
-	-- Main Frame
 	local mainFrame = Instance.new("Frame")
 	mainFrame.Size = UDim2.new(0, 400, 0, 350)
 	mainFrame.Position = UDim2.new(0.5, -200, 0.5, -125)
@@ -61,12 +56,10 @@ function Library:CreateWindow(title)
 	mainFrame.Draggable = true
 	mainFrame.Parent = screenGui
 
-	-- Inner Border
 	local innerStroke = Instance.new("UIStroke", mainFrame)
 	innerStroke.Thickness = 2
 	innerStroke.Color = Color3.fromRGB(255, 0, 0)
 
-	-- Outer Border
 	local outerFrame = Instance.new("Frame")
 	outerFrame.Size = UDim2.new(1, 8, 1, 8)
 	outerFrame.Position = UDim2.new(0, -4, 0, -4)
@@ -77,11 +70,9 @@ function Library:CreateWindow(title)
 	outerStroke.Thickness = 2
 	outerStroke.Color = Color3.fromRGB(255, 0, 0)
 
-	-- Corners
 	Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 10)
 	Instance.new("UICorner", outerFrame).CornerRadius = UDim.new(0, 12)
 
-	-- Title
 	local titleLabel = Instance.new("TextLabel")
 	titleLabel.Size = UDim2.new(1, -60, 0, 40)
 	titleLabel.Position = UDim2.new(0, 10, 0, 0)
@@ -94,7 +85,6 @@ function Library:CreateWindow(title)
 	titleLabel.Name = "Title"
 	titleLabel.Parent = mainFrame
 
-	-- Content Frame
 	local contentFrame = Instance.new("Frame")
 	contentFrame.Name = "ContentFrame"
 	contentFrame.Position = UDim2.new(0, 0, 0, 50)
@@ -105,7 +95,6 @@ function Library:CreateWindow(title)
 	local layout = Instance.new("UIListLayout", contentFrame)
 	layout.Padding = UDim.new(0, 6)
 
-	-- Close Button
 	local closeBtn = Instance.new("TextButton")
 	closeBtn.Size = UDim2.new(0, 30, 0, 30)
 	closeBtn.Position = UDim2.new(1, -35, 0, 5)
