@@ -2,13 +2,16 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzzA
 local window = Library:CreateWindow("Lume Window")
 local mainTab = window:AddTab("Main")
 
-mainTab:AddToggle("Auto Farm", function()
-    print("Auto Farm Enabled")
-    -- Put your ON logic here
-end, function()
-    print("Auto Farm Disabled")
-    -- Put your OFF logic here
-end)
+mainTab:AddToggle("Auto Farm", {
+	Default = false,
+	Callback = function(state)
+		if state then
+			print("Auto Farm Enabled")
+		else
+			print("Auto Farm Disabled")
+		end
+	end
+})
 
 maintab:AddButton("Name of the Button", function()
     -- Your Function here
