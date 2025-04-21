@@ -2,6 +2,7 @@ local Library = {}
 
 local TweenService = game:GetService("TweenService")
 local player = game.Players.LocalPlayer
+local isSplashFinished = false -- Flag to check if the splash screen is done
 
 -- Splash Screen (auto run once on require)
 task.spawn(function()
@@ -31,13 +32,18 @@ task.spawn(function()
 	fadeOut.Completed:Wait()
 
 	splashGui:Destroy()
+	
+	-- Set the flag to true once splash screen is finished
+	isSplashFinished = true
 end)
 
 -- Window Creation
 function Library:CreateWindow(title)
 	-- Wait until splash screen finishes
-	task.wait(2)
-
+	while not isSplashFinished do
+		task.wait(0.1) -- Wait for the splash screen to finish
+	end
+	
 	local playerGui = player:WaitForChild("PlayerGui")
 
 	-- ScreenGui
