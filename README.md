@@ -7,15 +7,7 @@ local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzzA
 
 Create Window Here:
 ```lua
-local window = library:AddWindow("Name GUI", {
-	main_color = Color3.fromRGB(41, 74, 122), -- Color
-	min_size = Vector2.new(250, 346), -- Size of the gui
-	can_resize = false, -- true or false
-})
-```
-AddLabel:
-```lua
-features:AddLabel("Hello World!")
+local window = library:CreateWindow("Window name Here")
 ```
 
 AddTab:
