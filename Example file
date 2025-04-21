@@ -2,16 +2,12 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzzA
 local window = Library:CreateWindow("Lume Window")
 local mainTab = window:AddTab("Main")
 
-local Toggle = mainTab:AddToggle("MyToggle", 
-{
-    Title = "Toggle", 
-    Description = "Toggle description here",
-    Default = false
-    Callback = function(state)
-	if state then
-	    print("Toggle On")
-	else
-	    print("Toggle Off")
-        end
-    end 
+local Toggle = Tab:CreateToggle({
+   Name = "Toggle name",
+   CurrentValue = false,
+   Flag = "Toggle1",
+   Callback = function(Value)
+   -- your code here
+   --  toggle is true or false
+   end,
 })
