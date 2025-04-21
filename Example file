@@ -9,3 +9,7 @@ end, function()
     print("Auto Farm Disabled")
     -- Put your OFF logic here
 end)
+
+maintab:AddButton("Name of the Button", function()
+    -- Your Function here
+end)
