@@ -172,16 +172,16 @@ function Library:CreateWindow(title)
 
 		function tab:AddButton(text, callback)
 			local button = Instance.new("TextButton")
-			button.Size = UDim2.new(0, 180, 0, 40) -- Made button slightly bigger
-			button.Position = UDim2.new(0.5, -90, 0, 0) -- Centered button horizontally
-			button.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Set button color to black
+			button.Size = UDim2.new(0, 180, 0, 40)
+			button.Position = UDim2.new(0.5, -90, 0, 0)
+			button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 			button.TextColor3 = Color3.fromRGB(255, 255, 255)
 			button.Font = Enum.Font.Gotham
 			button.TextSize = 14
 			button.Text = text
 			button.TextScaled = true
 			button.Parent = tabFrame
-			Instance.new("UICorner", button).CornerRadius = UDim.new(0, 15) -- Circular corners for the button
+			Instance.new("UICorner", button).CornerRadius = UDim.new(0, 15)
 			button.MouseButton1Click:Connect(callback)
 		end
 
