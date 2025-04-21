@@ -16,8 +16,8 @@ local tab = window:AddTab("Tab name Here")
 ```
 AddButton:
 ```lua
-features:AddButton("name",function()
-	-- Code here
+tab:AddButton("Name of the Button", function()
+    -- Your Function here
 end)
 ```
 AddToggle:
