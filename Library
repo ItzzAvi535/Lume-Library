@@ -33,7 +33,7 @@ task.spawn(function()
 end)
 
 function Library:CreateWindow(title)
-	task.wait(2.5)
+	task.wait(2.7)
 
 	local playerGui = player:WaitForChild("PlayerGui")
 
