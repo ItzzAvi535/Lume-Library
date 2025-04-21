@@ -1,5 +1,33 @@
 local Library = {}
 
+local TweenService = game:GetService("TweenService")
+local player = game.Players.LocalPlayer
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+screenGui.ResetOnSpawn = false
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Parent = screenGui
+textLabel.Size = UDim2.new(0, 400, 0, 50)
+textLabel.Position = UDim2.new(0.5, -200, 0.5, -25)
+textLabel.BackgroundTransparency = 1
+textLabel.Text = "Lume Library </>"
+textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+textLabel.TextScaled = true
+textLabel.Font = Enum.Font.GothamBold
+textLabel.TextTransparency = 1
+
+local fadeIn = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 0})
+fadeIn:Play()
+fadeIn.Completed:Wait()
+
+task.wait(2)
+local fadeOut = TweenService:Create(textLabel, TweenInfo.new(1, Enum.EasingStyle.Sine), {TextTransparency = 1})
+fadeOut:Play()
+fadeOut.Completed:Wait()
+
+task.wait(0.5)
+screenGui:Destroy()
+
 function Library:CreateWindow(title)
     local player = game.Players.LocalPlayer
     local playerGui = player:WaitForChild("PlayerGui")
@@ -57,5 +85,7 @@ function Library:CreateWindow(title)
 
     return window
 end
+
+task.wait(0.6)
 
 return Library
