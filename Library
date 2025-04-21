@@ -160,10 +160,6 @@ function Library:CreateWindow(title)
 		local layout = Instance.new("UIListLayout", tabFrame)
 		layout.Padding = UDim.new(0, 6)
 
-		-- Fix: Making the border of the tab Red and rounding the corners
-		local tabStroke = Instance.new("UIStroke", tabBtn)
-		tabStroke.Thickness = 2
-		tabStroke.Color = Color3.fromRGB(255, 0, 0)
 		Instance.new("UICorner", tabBtn).CornerRadius = UDim.new(0, 12)
 
 		tabBtn.MouseButton1Click:Connect(function()
@@ -176,7 +172,8 @@ function Library:CreateWindow(title)
 
 		function tab:AddButton(text, callback)
 			local button = Instance.new("TextButton")
-			button.Size = UDim2.new(0, 100, 0, 30) -- Smaller button size
+			button.Size = UDim2.new(0, 120, 0, 30) -- Reduced button width
+			button.Position = UDim2.new(0.5, -60, 0, 0) -- Centered button horizontally
 			button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 			button.TextColor3 = Color3.fromRGB(255, 255, 255)
 			button.Font = Enum.Font.Gotham
