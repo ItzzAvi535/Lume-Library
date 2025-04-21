@@ -185,18 +185,4 @@ function Library:CreateWindow(title)
 			button.MouseButton1Click:Connect(callback)
 		end
 
-	-- Important part dont delete
-	setToggle(isToggled)
-end
-		if not currentTab then
-			currentTab = tabFrame
-			tabFrame.Visible = true
-		end
-
-		return tab
-	end
-
-	return window
-end
-
 return Library
