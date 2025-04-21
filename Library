@@ -112,6 +112,8 @@ function Library:CreateWindow(title)
 		screenGui:Destroy()
 	end)
 
+task.wait(0.2)
+
 	-- Minimize Button
 	local minimizeBtn = Instance.new("TextButton")
 	minimizeBtn.Size = UDim2.new(0, 30, 0, 30)
