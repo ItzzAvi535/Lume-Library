@@ -7,3 +7,7 @@ local tab = window:AddTab("Main Tab")
 tab:AddButton("Name of the Button", function()
     -- Your Function here
 end)
+
+tab:AddButton("Name of the Button", function()
+    -- Your Function here
+end)
