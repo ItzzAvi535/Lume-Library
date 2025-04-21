@@ -230,9 +230,12 @@ function Library:CreateWindow(title)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			isToggled = not isToggled
 
+			local onPosition = UDim2.new(0, toggleBackground.Size.X.Offset - toggleCircle.Size.X.Offset - 3, 0.5, -10)
+			local offPosition = UDim2.new(0, 3, 0.5, -10)
+
 			if isToggled then
 				TweenService:Create(toggleCircle, TweenInfo.new(0.2), {
-					Position = UDim2.new(1, -23, 0.5, -10),
+					Position = onPosition,
 					BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 				}):Play()
 
@@ -243,7 +246,7 @@ function Library:CreateWindow(title)
 				if onFunc then onFunc() end
 			else
 				TweenService:Create(toggleCircle, TweenInfo.new(0.2), {
-					Position = UDim2.new(0, 3, 0.5, -10),
+					Position = offPosition,
 					BackgroundColor3 = Color3.fromRGB(150, 150, 150)
 				}):Play()
 
@@ -256,7 +259,6 @@ function Library:CreateWindow(title)
 		end
 	end)
 end
-
 		if not currentTab then
 			currentTab = tabFrame
 			tabFrame.Visible = true
