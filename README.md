@@ -12,8 +12,7 @@ local window = library:CreateWindow("Window name Here")
 
 AddTab:
 ```lua
-local features = window:AddTab("Features") -- Name of tab
-features:Show() -- shows the tab
+local tab = window:AddTab("Tab name Here")
 ```
 AddButton:
 ```lua
