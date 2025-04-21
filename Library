@@ -35,6 +35,9 @@ end)
 
 -- Window Creation
 function Library:CreateWindow(title)
+	-- Wait until splash screen finishes
+	task.wait(2)
+
 	local playerGui = player:WaitForChild("PlayerGui")
 
 	-- ScreenGui
@@ -133,8 +136,6 @@ function Library:CreateWindow(title)
 			mainFrame.Size = UDim2.new(0, 400, 0, 350)
 		end
 	end)
-
-task.wait(2)
 
 	-- Return window with AddButton method
 	local window = {}
