@@ -8,4 +8,10 @@ tab:AddButton("Name of the Button", function()
     -- Your Function here
 end)
 
-local tab = window:AddTab("Settings")
+Tab:AddToggle("Auto Farm", function()
+    print("Auto Farm Enabled")
+    -- Put your ON logic here
+end, function()
+    print("Auto Farm Disabled")
+    -- Put your OFF logic here
+end)
