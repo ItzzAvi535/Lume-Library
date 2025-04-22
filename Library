@@ -186,6 +186,18 @@ function Library:CreateWindow(title)
 			button.MouseButton1Click:Connect(callback)
 		end
 
+function tab:AddLabel(text)
+	local label = Instance.new("TextLabel")
+	label.Size = UDim2.new(1, -10, 0, 30)
+	label.BackgroundTransparency = 1
+	label.TextColor3 = Color3.fromRGB(255, 255, 255)
+	label.Font = Enum.Font.GothamBold
+	label.TextSize = 16
+	label.Text = text
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.Parent = tabFrame
+end
+
 		return tab
 	end
 
