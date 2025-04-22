@@ -4,8 +4,8 @@ local window = Library:CreateWindow("Lume Window")
 
 local mainTab = window:AddTab("Main")
 
-maintab:AddButton("Name of the Button", function()
+mainTab:AddButton("Name of the Button", function()
     -- Your Function here
 end)
 
-maintab:AddLabel("Your text here")
+mainTab:AddLabel("Your text here")
