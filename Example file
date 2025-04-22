@@ -1,3 +1,10 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/ItzzAvi535/Lume-Library/refs/heads/main/Library", true))()
+
 local window = Library:CreateWindow("Lume Window")
+
 local mainTab = window:AddTab("Main")
+
+maintab:AddButton("Name of the Button", function()
+    -- Your Function here
+end)
+
