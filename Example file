@@ -8,3 +8,4 @@ maintab:AddButton("Name of the Button", function()
     -- Your Function here
 end)
 
+tab:AddLabel("Your text here")
