@@ -275,6 +275,45 @@ function tab:AddDropdown(name, options, callback)
 
     dropdownButton.MouseButton1Click:Connect(toggleDropdown)
 end
+
+function tab:AddToggle(name, callback)
+    local container = Instance.new("Frame")
+    container.Size = UDim2.new(1, 0, 0, 30)
+    container.BackgroundTransparency = 1
+    container.Parent = self
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, -30, 1, 0)
+    label.Position = UDim2.new(0, 30, 0, 0)
+    label.BackgroundTransparency = 1
+    label.Text = name
+    label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    label.Font = Enum.Font.SourceSans
+    label.TextSize = 16
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.Parent = container
+
+    local box = Instance.new("TextButton")
+    box.Size = UDim2.new(0, 25, 0, 25)
+    box.Position = UDim2.new(0, 0, 0.5, -12)
+    box.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    box.TextColor3 = Color3.fromRGB(255, 255, 255)
+    box.Font = Enum.Font.SourceSans
+    box.TextSize = 18
+    box.Text = ""
+    box.Parent = container
+
+    local toggled = false
+
+    box.MouseButton1Click:Connect(function()
+        toggled = not toggled
+        box.Text = toggled and "X" or ""
+        
+        if callback then
+            callback(toggled)
+        end
+    end)
+end
 		return tab
 	end
 
