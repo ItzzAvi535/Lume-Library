@@ -200,10 +200,10 @@ end
 
 function tab:AddDropdown(name, options, callback)
     local dropdown = Instance.new("Frame")
-    dropdown.Size = UDim2.new(0, 200, 0, 40) -- Size of the dropdown
-    dropdown.BackgroundColor3 = Color3.fromRGB(40, 40, 40) -- Background color
+    dropdown.Size = UDim2.new(0, 200, 0, 60)
+    dropdown.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
     dropdown.BorderSizePixel = 0
-    dropdown.Parent = self -- Parent to the tab
+    dropdown.Parent = self
 
     local label = Instance.new("TextLabel")
     label.Size = UDim2.new(1, 0, 0, 30)
@@ -211,6 +211,7 @@ function tab:AddDropdown(name, options, callback)
     label.Text = name
     label.TextColor3 = Color3.fromRGB(255, 255, 255)
     label.TextSize = 16
+    label.Font = Enum.Font.SourceSans
     label.Parent = dropdown
 
     local dropdownButton = Instance.new("TextButton")
@@ -220,32 +221,35 @@ function tab:AddDropdown(name, options, callback)
     dropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     dropdownButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     dropdownButton.BorderSizePixel = 0
+    dropdownButton.Font = Enum.Font.SourceSans
+    dropdownButton.TextSize = 16
     dropdownButton.Parent = dropdown
 
     local optionsFrame = Instance.new("Frame")
-    optionsFrame.Size = UDim2.new(1, 0, 0, 0)
+    optionsFrame.Size = UDim2.new(1, 0, 0, #options * 30)
     optionsFrame.Position = UDim2.new(0, 0, 0, 60)
-    optionsFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    optionsFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
     optionsFrame.Visible = false
+    optionsFrame.ClipsDescendants = true
     optionsFrame.Parent = dropdown
 
-    local optionButtons = {}
     for i, option in ipairs(options) do
         local optionButton = Instance.new("TextButton")
         optionButton.Size = UDim2.new(1, 0, 0, 30)
+        optionButton.Position = UDim2.new(0, 0, 0, (i - 1) * 30)
         optionButton.Text = option
         optionButton.TextColor3 = Color3.fromRGB(255, 255, 255)
         optionButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
         optionButton.BorderSizePixel = 0
+        optionButton.Font = Enum.Font.SourceSans
+        optionButton.TextSize = 16
         optionButton.Parent = optionsFrame
 
         optionButton.MouseButton1Click:Connect(function()
             dropdownButton.Text = option
-            callback(option)
             optionsFrame.Visible = false
+            callback(option)
         end)
-
-        table.insert(optionButtons, optionButton)
     end
 
     dropdownButton.MouseButton1Click:Connect(function()
