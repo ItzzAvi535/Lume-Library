@@ -20,10 +20,7 @@ tab:AddButton("Name of the Button", function()
     -- Your Function here
 end)
 ```
-AddToggle:
+AddLabel:
 ```lua
-local switch = features:AddSwitch("name", function(bool)
-	 -- toggle_god_mode(bool)
-end)
-switch:Set(true)
+tab:AddLabel("Your text here")
 ```
