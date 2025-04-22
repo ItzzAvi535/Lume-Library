@@ -9,3 +9,7 @@ mainTab:AddButton("Name of the Button", function()
 end)
 
 mainTab:AddLabel("Your text here")
+
+mainTab:AddDropdown("Choose Weapon", {"Sword", "Bow", "Staff"}, function(selectedOption)
+    print("Selected option: " .. selectedOption)
+end)
